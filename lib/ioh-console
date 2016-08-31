@@ -2,15 +2,14 @@
 
 # List consoles in use
 __console_list() {
-	local pool="$(zfs list -H | grep iohyve | cut -d '/' -f 1 | head -n1)"
-	local guestlist="$(zfs list -H | grep iohyve | grep -v ISO | grep -v disk | grep -v Firmware | sed 1d | cut -f1 | cut -d '/' -f3)"
-	(
-	printf 'Guest\tConsole\n'
-	for guest in $guestlist; do
-		local con="$(zfs get -H -o value iohyve:con $pool/iohyve/$guest)"
-		printf $guest'\t'$con'\n'
-	done
-	) | column -t
+        local guestlist="$(zfs list -H | grep iohyve | grep -v ISO | grep -v disk | grep -v Firmware | sed 1d | cut -f1 | grep '/iohyve/')"
+        (
+        printf 'Guest\tConsole\n'
+        for guest in $guestlist; do
+                local con="$(zfs get -H -o value iohyve:con $guest)"
+                printf $guest'\t'$con'\n'
+        done
+        ) | column -t
 }
 
 # Run console
