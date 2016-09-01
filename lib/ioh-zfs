@@ -155,6 +155,7 @@ __zfs_cloneguest() {
 	if [ "$flag" == "-r" ]; then
 		name="$3"
 		cname="$4"
+	fi
 
 	if [ -z $cname ]; then
 		printf "missing argument\nusage:\n"
@@ -209,7 +210,6 @@ __zfs_cloneguest() {
 				zfs set iohyve:tap=tap$tap $pool/iohyve/$cname
 				zfs set iohyve:con=nmdm$con $pool/iohyve/$cname
 			fi
-		fi
 	else
 		echo "Not a valid guest name"
 	fi
