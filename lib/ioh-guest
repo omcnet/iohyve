@@ -470,8 +470,9 @@ __guest_boot() {
 					runstate="0"
 				fi
 			fi
+			bhyvectl --destroy --vm=ioh-$name
 		done
-		bhyvectl --destroy --vm=ioh-$name
+
 		# Resetting the flag so that a vm which we stopped by abusing zfs set/get
 		# as as an IPC mechanism is persistent again next time we start it
 		if [ -n "$persist" ]; then
